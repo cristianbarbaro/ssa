@@ -22,7 +22,7 @@ Use App\Objeto;
 Route::get('incidentes', function() {
     // If the Content-Type and Accept headers are set to 'application/json', 
     // this will return a JSON structure. This will be cleaned up later.
-    return Objeto::all();
+    return Incidente::all();
 });
 
 Route::get('incidentes/noAsignado', function() {
@@ -36,7 +36,8 @@ Route::get('incidentes/{id}', function($id) {
 });
 
 Route::post('incidentes', function(Request $request) {
-    return Incidente::create($request->all);
+    // { "nroCliente": 1, "descripcionIncidente": "Descripcion de incidente", "fechaIncidente": "2017/10/10" }
+    return Incidente::create($request->all());
 });
 
 Route::put('incidentes/{id}', function(Request $request, $id) {

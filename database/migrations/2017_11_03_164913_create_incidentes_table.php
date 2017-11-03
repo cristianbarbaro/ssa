@@ -19,7 +19,7 @@ class CreateIncidentesTable extends Migration
             $table->bigInteger('nroCliente');
             $table->text('descripcionIncidente');
             $table->date('fechaIncidente');
-            $table->string('estado', 20);
+            $table->string('estado', 20)->default('CREADO');
         });
     }
 
