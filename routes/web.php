@@ -18,3 +18,9 @@ Route::get('/', function () {
 Route::resource('incidentes', 'IncidenteController', ['only' => [
     'create', 'show', 'store'
 ]]);
+
+Route::resource('imagenes', 'ImagenController', ['only' => [
+    'show', 'store'
+]]);
+
+Route::get('imagenes/create/{id}', "ImagenController@create");

@@ -108,6 +108,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    # Dropbox key:
+    'dropboxkey' => env('DROPBOX_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
