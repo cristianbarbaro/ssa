@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('incidentes', 'IncidenteController', ['only' => [
+    'create', 'show', 'store'
+]]);
