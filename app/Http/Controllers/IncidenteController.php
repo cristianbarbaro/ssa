@@ -36,6 +36,15 @@ class IncidenteController extends Controller
     public function store(Request $request)
     {
         $incidente = Incidente::create($request->all());
+
+        if($request->has('objeto'))
+        {
+          $objetos = $request->get('objeto');
+          // Se guarda los objetos en la base de datos:
+          foreach($objetos as $id => $objeto){
+              $incidente->objetos()->create($objeto);
+          }
+        }
         return redirect()->route('incidentes.show', [$incidente->id]);
     }
 

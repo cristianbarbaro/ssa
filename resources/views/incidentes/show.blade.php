@@ -16,6 +16,17 @@
     Cantidad total de objetos: {{ $cantidadObjetosTotal }}
   </li>
   <li>
+    Objetos:
+    <ul>
+      @foreach ($incidente->objetos as $objeto)
+        <li>Nombre: {{ $objeto->nombre }}</li>
+        <li>Cantidad: {{ $objeto->cantidad}}</li>
+        <li>Descripción: {{ $objeto->descripcion }}</li>
+        <hr>
+      @endforeach
+    </ul>
+  </li>
+  <li>
     Estado de incidente: {{ $incidente->estado }}
   </li>
 </ul>

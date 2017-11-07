@@ -21,10 +21,30 @@
           </div>
       </div>
 
-      <h3>Objetos <a class='btn btn-xs btn-default' href="#" id="agregar_objeto">Agregar un objeto</a></h3>
+      <p><a class='btn btn-xs btn-default' href="#" id="agregar_objetos">Agregar objeto</a></p>
+
+      <div id="noobjetos">Sin objetos</div>
+      <div id="objetos"></div>
+      <hr>
 
       {!! Form::submit('Crear', array('class' => 'btn btn-primary')) !!}
 
   </div>
 
   {!! Form::close() !!}
+
+  @include('objetos.objetos_template')
+
+  <script>
+      $(document).ready(function() {
+          // functionality for the 'Add one' button
+          var template = $('#hidden-template').html();
+          $('#agregar_objetos').click(function() {
+              if( $("#noobjetos").length) {
+                  $("#noobjetos").remove();
+              }
+              var index = $('.js-new-objeto').length;
+              $('#objetos').append(template.replace(/\{index\}/g, index));
+          });
+      });
+    </script>
