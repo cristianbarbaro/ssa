@@ -1,5 +1,9 @@
+@extends('layouts.base')
+
+@section('content')
+
 {!! Form::open(array('route' => 'imagenes.store','method'=>'POST', 'files' => true)) !!}
-  <div class="row">
+  <div class="row col-md-6 col-md-offset-3">
       <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="form-group">
               <strong>Imagenes:</strong>
@@ -10,8 +14,12 @@
           </div>
       </div>
 
-      {!! Form::submit('Subir', array('class' => 'btn btn-primary')) !!}
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        {!! Form::submit('Subir', array('class' => 'btn btn-primary')) !!}
+      </div>
 
   </div>
 
   {!! Form::close() !!}
+
+@endsection

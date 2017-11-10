@@ -1,7 +1,10 @@
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+@extends('layouts.base')
+
+@section('content')
 
 {!! Form::open(array('route' => 'incidentes.store','method'=>'POST')) !!}
-  <div class="row">
+  <div class="row col-md-6 col-md-offset-3">
+    <h3 class="text-center">Nuevo incidente</h3>
       <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="form-group">
               <strong>Número de cliente:</strong>
@@ -21,13 +24,17 @@
           </div>
       </div>
 
-      <p><a class='btn btn-xs btn-default' href="#" id="agregar_objetos">Agregar objeto</a></p>
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <p><a class='btn btn-xs btn-default' href="#" id="agregar_objetos">Agregar objeto</a></p>
+      </div>
 
-      <div id="noobjetos">Sin objetos</div>
+      <div class="col-xs-12 col-sm-12 col-md-12" id="noobjetos">Sin objetos</div>
       <div id="objetos"></div>
       <hr>
 
-      {!! Form::submit('Crear', array('class' => 'btn btn-primary')) !!}
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        {!! Form::submit('Crear incidente', array('class' => 'btn btn-success pull-right')) !!}
+      </div>
 
   </div>
 
@@ -48,3 +55,5 @@
           });
       });
     </script>
+
+@endsection
