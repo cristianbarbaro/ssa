@@ -12,12 +12,7 @@ class ObjetosTableSeeder extends Seeder
      */
     public function run()
     {
-        // Let's truncate our existing records to start from scratch.
-        Objeto::truncate();
-        
-        $faker = \Faker\Factory::create();
-
-        // And now, let's create a few articles in our database:
+      // And now, let's create a few articles in our database:
         Objeto::create([
             'nombre' => 'cocina',
             'descripcion' => 'Cocina 4 hornallas',

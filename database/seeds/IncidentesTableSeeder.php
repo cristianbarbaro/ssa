@@ -12,11 +12,6 @@ class IncidentesTableSeeder extends Seeder
      */
     public function run()
     {
-        // Let's truncate our existing records to start from scratch.
-        Incidente::truncate();
-
-        $faker = \Faker\Factory::create();
-
         // And now, let's create a few articles in our database:
         Incidente::create([
             'user_id' => 1,
