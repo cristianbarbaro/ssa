@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('content')
 
@@ -9,7 +9,7 @@
 
   <ul>
     <li>
-      Número de cliente: {{ $incidente->nroCliente }}
+      Número de cliente: {{ $incidente->user_id }}
     </li>
     <li>
       Descripción de incidente: {{ $incidente->descripcionIncidente }}

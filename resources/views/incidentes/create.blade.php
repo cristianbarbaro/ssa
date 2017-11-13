@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('content')
 
@@ -6,10 +6,7 @@
   <div class="row col-md-6 col-md-offset-3">
     <h3 class="text-center">Nuevo incidente</h3>
       <div class="col-xs-12 col-sm-12 col-md-12">
-          <div class="form-group">
-              <strong>Número de cliente:</strong>
-              {!! Form::number('nroCliente', null, array('placeholder' => 'Número de cliente','class' => 'form-control')) !!}
-          </div>
+              {!! Form::hidden('user_id', $user_id) !!}
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">

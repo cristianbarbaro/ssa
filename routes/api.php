@@ -34,7 +34,7 @@ Route::get('incidentes/{id}', function($id) {
 });
 
 Route::post('incidentes', function(Request $request) {
-    // { "nroCliente": 1, "descripcionIncidente": "Descripcion de incidente", "fechaIncidente": "2017/10/10" }
+    // { "user_id": 1, "descripcionIncidente": "Descripcion de incidente", "fechaIncidente": "2017/10/10" }
     return Incidente::create($request->all());
 });
 

@@ -111,6 +111,9 @@ return [
     # Dropbox key:
     'dropboxkey' => env('DROPBOX_KEY'),
 
+    # login passwords:
+    'user1pass' => env('PASSWORD_1'),
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Incidente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IncidenteController extends Controller
 {
@@ -14,7 +15,10 @@ class IncidenteController extends Controller
      */
     public function index()
     {
-        //
+        $incidentes = Auth::user()->incidentes()->get();
+        return view('incidentes.index', [
+          'incidentes' => $incidentes,
+        ]);
     }
 
     /**
@@ -24,7 +28,10 @@ class IncidenteController extends Controller
      */
     public function create()
     {
-        return view('incidentes.create');
+        $user = Auth::user();
+        return view('incidentes.create', [
+          'user_id' => $user->id,
+        ]);
     }
 
     /**

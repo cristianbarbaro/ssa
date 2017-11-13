@@ -16,10 +16,15 @@ class CreateIncidentesTable extends Migration
         Schema::create('incidentes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->bigInteger('nroCliente');
+            // $table->bigInteger('nroCliente');
             $table->text('descripcionIncidente');
             $table->date('fechaIncidente');
             $table->string('estado', 20)->default('CREADO');
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
