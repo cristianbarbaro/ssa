@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Incidente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreIncidente;
 
 class IncidenteController extends Controller
 {
@@ -37,10 +38,10 @@ class IncidenteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreIncidente  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIncidente $request)
     {
         $incidente = Incidente::create($request->all());
 

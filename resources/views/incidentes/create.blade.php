@@ -12,12 +12,18 @@
         <div class="form-group">
           <strong>Fecha de incidente:</strong>
           {!! Form::date('fechaIncidente', null, array('placeholder' => 'Fecha del incidente','class' => 'form-control')) !!}
+          @if ($errors->has('fechaIncidente'))
+            <span class="text-danger">{{ $errors->first('fechaIncidente') }}</span>
+          @endif
         </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="form-group">
               <strong>Descripción del incidente:</strong>
               {!! Form::textarea('descripcionIncidente', null, array('placeholder' => 'Descripción del incidente','class' => 'form-control')) !!}
+              @if ($errors->has('descripcionIncidente'))
+                <span class="text-danger">{{ $errors->first('descripcionIncidente') }}</span>
+              @endif
           </div>
       </div>
 
