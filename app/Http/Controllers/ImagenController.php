@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use League\Flysystem\Filesystem;
 use Dropbox\Client;
 use Dropbox\WriteMode;
+use App\Imagen;
+use App\Incidente;
 
 class ImagenController extends Controller
 {
@@ -41,10 +43,11 @@ class ImagenController extends Controller
       return true;
     }
 
-    public function curl_get_shared_link($file, $incidente_id)
+    public function curl_get_shared_link($filename, $incidente_id)
     {
+      // Permite obtener un enlace compartido (es necesario tener los permisos adecuados en Dropbox para compartir archivos).
       $dropbox_key = config('app.dropboxkey');
-      $path = "/ssa/" . $incidente_id . "/" . $file->getClientOriginalName();
+      $path = "/ssa/" . $incidente_id . "/" . $filename;
 
       $ch = curl_init("https://content.dropboxapi.com/2/sharing/get_shared_link_file");
 
@@ -53,7 +56,7 @@ class ImagenController extends Controller
 
       $headers = array();
       $headers[] = "Authorization: Bearer " . $dropbox_key;
-      $headers[] = "Dropbox-Api-Arg: {\"url\": \"https://www.dropbox.com/s/2sn712vy1ovegw8/" . $file->getClientOriginalName() . "?dl=0\",\"path\": \"" . $path . "\"}";
+      $headers[] = "Dropbox-Api-Arg: {\"url\": \"https://www.dropbox.com/s/2sn712vy1ovegw8/" . $filename . "?dl=0\",\"path\": \"" . $path . "\"}";
       $headers[] = "Content-Type: text/plain; charset=utf-8";
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -64,14 +67,15 @@ class ImagenController extends Controller
       }
       curl_close ($ch);
 
-      return true;
+      $json_result = json_decode($result);
+      return $json_result->{'link'};
     }
 
-    public function curl_get_temporary_link($file, $incidente_id)
+    public function curl_get_temporary_link($filename, $incidente_id)
     {
       // Permite descargar el archivo a través de un enlace temporal.
       $dropbox_key = config('app.dropboxkey');
-      $path = "/ssa/" . $incidente_id . "/" . $file->getClientOriginalName();
+      $path = "/ssa/" . $incidente_id . "/" . $filename;
 
       $ch = curl_init();
 
@@ -89,9 +93,10 @@ class ImagenController extends Controller
       if (curl_errno($ch)) {
           echo 'Error:' . curl_error($ch);
       }
-      dd(json_decode($result));
-
+ 
       curl_close ($ch);
+      $json_result = json_decode($result);
+      return $json_result->{'link'};
     }
 
     /**
@@ -99,9 +104,23 @@ class ImagenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($incidente_id)
     {
-        //
+        $incidente = Incidente::find($incidente_id);
+        $imagenes = $incidente->imagenes()->get();
+        $shared_links = [];
+        if ($incidente){
+            foreach($imagenes as $imagen){
+                $shared_links[$imagen->nombre] = $this->curl_get_temporary_link($imagen->nombre, $incidente->id);
+            }
+        }else{
+            abort(404);
+        }
+
+        return view('imagenes.index', [
+            'shared_links' => $shared_links,
+            'incidente_id' => $incidente->id,
+        ]);
     }
 
     /**
@@ -124,16 +143,26 @@ class ImagenController extends Controller
      */
     public function store(Request $request)
     {
+      # https://laracasts.com/discuss/channels/laravel/laravel-5-fileimage-upload-example-with-validation?page=1
       $incidente_id = $request->input('incidente_id');
       $files = $request->file('nombre');
+
+      $shared_links = [];
 
       if ($request->hasFile('nombre'))
       {
         foreach($files as $file)
-          $this->curl_post_image($file, $incidente_id);
-          $shared_link = $this->curl_get_temporary_link($file, $incidente_id);
+        if ($this->curl_post_image($file, $incidente_id)){
+            $filename = $file->getClientOriginalName();
+            //$shared_link = $this->curl_get_temporary_link($filename, $incidente_id);
+            Imagen::create([
+                'nombre' => $filename,
+                'incidente_id' => $incidente_id,
+            ]);
+            //$shared_links[] = $shared_link;
+        }
       }
-      // return redirect()->route('incidentes.create');
+      return redirect()->route('imagenes.index', [$incidente_id]);
       return "OK";
     }
 

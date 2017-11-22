@@ -15,7 +15,8 @@ Route::resource('imagenes', 'ImagenController', ['only' => [
   'show', 'store'
   ]]);
 
-Route::get('imagenes/create/{id}', "ImagenController@create");
+Route::get('imagenes/create/{id}', "ImagenController@create")->name('imagenes.create');
+Route::get('imagenes/index/{id}', "ImagenController@index")->name('imagenes.index');
 
 // Auth::routes();
 

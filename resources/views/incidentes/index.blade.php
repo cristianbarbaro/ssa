@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row col-md-6 col-md-offset-3">
+<div class="row col-md-8 col-md-offset-2">
   <h2 class="text-center">Mis incidentes</h2>
 
   <table class="table table-bordered">
@@ -22,7 +22,7 @@
           <td class="text-center">{{ $incidente->descripcionIncidente }}</td>
           <td class="text-center">{{ $incidente->fechaIncidente }}</td>
           <td class="text-center">{{ $incidente->estado }}</td>
-          <td class="">@foreach ($incidente->objetos as $objeto)
+          <td class="text-center">@foreach ($incidente->objetos as $objeto)
             <li>{{ $objeto->nombre }}</li>
           @endforeach</td>
         </tr>

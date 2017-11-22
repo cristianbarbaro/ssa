@@ -7,7 +7,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12">
           <div class="form-group">
               <strong>Imagenes:</strong>
-              {!! Form::file('nombre[]', ['multiple' => 'multiple']) !!}
+              {!! Form::file('nombre[]', ['multiple' => 'multiple', 'accept' => 'image/*']) !!}
           </div>
           <div class="form-group">
               {!! Form::hidden('incidente_id', $incidente_id ) !!}

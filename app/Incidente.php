@@ -12,4 +12,9 @@ class Incidente extends Model
     {
         return $this->hasMany('App\Objeto');
     }
+
+    public function imagenes()
+    {
+        return $this->hasMany('App\Imagen');
+    }
 }
