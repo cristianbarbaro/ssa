@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 Use App\Incidente;
 Use App\Objeto;
+Use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,18 @@ Route::get('incidentes', function() {
 Route::get('incidentes/noAsignado', function() {
     // retorna el primer incidente que no ha sido asignado.
     $incidente = Incidente::where('estado', 'CREADO')->first();
+    $user = User::find($incidente->user_id);
 
-    return $incidente->load('objetos');
+    // debido a un bardo en Bonita, se decide armar lo que debería recibir. Sino no funcionan correctamente los procesos.
+    return response()->json([
+        'idIncidente' => $incidente->id,
+        'nroCliente' => intval($incidente->user_id),
+        'cantidadObjetos' => $incidente->objetos()->count(),
+        'descripcionIncidente' => $incidente->descripcionIncidente,
+        'fechaIncidente' => date('Y/m/d', strtotime($incidente->fechaIncidente)),
+        'email' => $user->email,
+        'objetos' => $incidente->objetos()->get(['cantidad', 'descripcion', 'nombre']),
+    ]);
 });
 
 Route::get('incidentes/{id}', function($id) {
