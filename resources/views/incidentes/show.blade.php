@@ -32,7 +32,7 @@
       </ul>
     </li>
     <li>
-      Estado de incidente: {{ $incidente->estado }}
+      Estado de incidente: <b>{{ $incidente->estado }}</b>
     </li>
   </ul>
 </div>

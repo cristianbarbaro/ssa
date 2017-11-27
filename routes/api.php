@@ -24,9 +24,25 @@ Route::get('incidentes', function() {
     return Incidente::with('objetos')->get();
 });
 
-Route::get('incidentes/noAsignado', function() {
-    // retorna el primer incidente que no ha sido asignado.
+Route::get('incidentes/noAsignado', function(){
+    // Retorna un id de incidente si existe uno no asignado, null caso contrario...
     $incidente = Incidente::where('estado', 'CREADO')->first();
+
+    $incidente_json = ['idIncidente' => null];
+
+    if ($incidente){
+        $incidente->estado = "TOMADO";
+        $incidente->save();
+        $incidente_json = ['idIncidente' => $incidente->id];
+    }
+
+    return response()->json($incidente_json);
+});
+
+Route::get('incidentes/noAsignado/{id}', function($id) {
+    // retorna el primer incidente que no ha sido asignado.
+    //$incidente = Incidente::where('estado', 'CREADO')->first();
+    $incidente = Incidente::find($id);
     $user = User::find($incidente->user_id);
 
     // debido a un bardo en Bonita, se decide armar lo que debería recibir. Sino no funcionan correctamente los procesos.
